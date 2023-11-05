@@ -19,7 +19,8 @@
        %m 日志消息，%n是换行符
        %X{traceId}:自定义设置的参数，后面会说。
        -->
-    <property name="FILE_LOG_PATTERN" value="[TraceId: %X{traceId}] %d{yyyy-MM-dd HH:mm:ss.SSS} [%contextName] [%thread] %-5level %logger{50} - %msg%n"/>
+    <property name="FILE_LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{50} - %msg%n"/>
+<!--    <property name="FILE_LOG_PATTERN" value="[TraceId: %X{traceId}] %d{yyyy-MM-dd HH:mm:ss.SSS} [%contextName] [%thread] %-5level %logger{50} - %msg%n"/>-->
     <property name="CONSOLE_LOG_PATTERN" value="${FILE_LOG_PATTERN}"/>
 <!--    <property name="CONSOLE_LOG_PATTERN1" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{50} - %msg%n"/>-->
 
