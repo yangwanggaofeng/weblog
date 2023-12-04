@@ -19,6 +19,10 @@
         <!--依赖其他子模块-->
         <dependency>
             <groupId>com.study</groupId>
+            <artifactId>weblog-module-jwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.study</groupId>
             <artifactId>weblog-module-admin</artifactId>
         </dependency>
         <dependency>

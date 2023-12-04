@@ -107,4 +107,16 @@ public class GlobalExceptionHandler {
         return Response.fail(errorCode, errorMessage);
 
     }
+    /**
+     * 其他类型异常
+     * @param request
+     * @param e
+     * @return
+     */
+    @ExceptionHandler({ Exception.class })
+    @ResponseBody
+    public Response<Object> handleOtherException(HttpServletRequest request, Exception e) {
+        log.error("{} request error, ", request.getRequestURI(), e);
+        return Response.fail(ResponseCodeEnum.SYSTEM_ERROR.getErrorCode(), ResponseCodeEnum.SYSTEM_ERROR.getErrorMessage());
+    }
 }

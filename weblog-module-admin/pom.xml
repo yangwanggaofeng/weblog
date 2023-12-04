@@ -10,12 +10,22 @@
     </parent>
     <groupId>com.study</groupId>
     <artifactId>weblog-module-admin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+<!--    <version>0.0.1-SNAPSHOT</version>-->
     <name>weblog-module-admin</name>
     <description>weblog-admin (负责管理后台相关功能)</description>
 
     <dependencies>
-        <!--依赖其他子模块-->
+        <!--添加 security 依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!--依赖jwt子模块-->
+        <dependency>
+            <groupId>com.study</groupId>
+            <artifactId>weblog-module-jwt</artifactId>
+        </dependency>
+        <!--依赖common子模块-->
         <dependency>
             <groupId>com.study</groupId>
             <artifactId>weblog-module-common</artifactId>

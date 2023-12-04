@@ -1,16 +1,16 @@
 package com.study.weblog.web.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.study.weblog.common.aspect.ApiOperationLog;
 import com.study.weblog.common.enums.ResponseCodeEnum;
 import com.study.weblog.common.exception.BizException;
 import com.study.weblog.common.utils.Response;
 import com.study.weblog.web.model.User;
+import com.study.weblog.web.service.TestService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.stream.Collectors;
 
 /**
  * @ClassName TestController
@@ -31,6 +30,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @Api(tags = "首页模块")
 public class TestController {
+    @Autowired
+    private TestService testService;
 
     @PostMapping("/test")
     @ApiOperationLog(description = "测试接口")
@@ -58,6 +59,12 @@ public class TestController {
     @ApiOperationLog(description = "测试全局异常类")
     public Response testException(){
         // 手动抛异常，入参是前面定义好的异常码枚举，返参统一交给全局异常处理器搞定
-        throw new BizException(ResponseCodeEnum.PRODUCT_NOT_FOUND);
+        throw new BizException(ResponseCodeEnum.LOGIN_FAIL);
     }
+    @GetMapping("/test/weblog/get")
+    @ApiOperationLog(description = "测试weblog服务get接口")
+    public Response testWeblogGet(){
+        return Response.success("测试weblog服务get接口");
+    }
+
 }
