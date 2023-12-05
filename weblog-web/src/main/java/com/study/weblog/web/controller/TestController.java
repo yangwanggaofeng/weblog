@@ -9,6 +9,7 @@ import com.study.weblog.web.service.TestService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,6 +66,14 @@ public class TestController {
     @ApiOperationLog(description = "测试weblog服务get接口")
     public Response testWeblogGet(){
         return Response.success("测试weblog服务get接口");
+    }
+    @PostMapping("/admin/update")
+    @ApiOperationLog(description = "测试更新接口")
+    @ApiOperation(value = "测试更新接口")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Response testUpdate(){
+        log.info("更新成功");
+        return Response.success();
     }
 
 }

@@ -13,3 +13,12 @@ create table  if not exists weblog.t_user(
     unique key uk_username (username)
 )engine=Innodb default charset=utf8mb4 comment='用户表';
 
+create table if not EXISTS  t_user_role(
+    id int UNSIGNED not null auto_increment comment 'id',
+    username varchar(60) not null comment '用户名',
+    role varchar(60) comment '角色',
+    create_time datetime default CURRENT_TIMESTAMP comment '创建时间',
+    primary key (id),
+    key idx_username (username) using btree
+)engine=innodb default charset=utf8mb4 row_format=dynamic comment='用户角色表';
+

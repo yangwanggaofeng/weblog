@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class PasswordEncoderConfig {
     public static void main(String[] args) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        System.out.println(encoder.encode("xiaoqi"));
+        System.out.println(encoder.encode("test"));
     }
 
     @Bean

@@ -15,7 +15,7 @@ jwt:
   #token过期时间（单位 分钟）24 *60
   tokenExpireTime: 1440
   #token请求头中的key
-#  tokenHeaderKey: Authorization
-  tokenHeaderKey: access_token
+  tokenHeaderKey: Authorization
+#  tokenHeaderKey: access_token
   #token 请求头的value值前缀
   tokenPrefix: Bearer
