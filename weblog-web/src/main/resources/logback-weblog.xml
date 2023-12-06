@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration >
+    <!-- 参考https://www.jianshu.com/p/0cc29d3f775a-->
+    <jmxConfigurator/>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <contextName>bingbing-service</contextName>
+    <!-- 应用名称 -->
+    <property scope="context" name="appName" value="weblog" />
+    <!-- 自定义日志输出路径，以及日志名称前缀 -->
+    <!--在配置文件中，我们可以用<property>标签来定义变量，name为变量的名称，value为变量的值
+     然后用${} 的方式来使用，将变量引入到其他节点中去。 -->
+    <property name="LOG_FILE" value="/app/weblog-web/logs/${appName}.%d{yyyy-MM-dd}"/>
+    <!-- 格式化输出：https://logback.qos.ch/manual/layouts.html
+       %d 表示日期，
+       %thread 表示线程名，
+       %level 日志级别从左显示5个字符宽度，
+       %t 线程名
+       %file:%line 文件名+行号，
+       %m 日志消息，%n是换行符
+       %X{traceId}:自定义设置的参数，后面会说。
+       -->
+    <property name="FILE_LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{50} - %msg%n"/>
+<!--    <property name="FILE_LOG_PATTERN" value="[TraceId: %X{traceId}] %d{yyyy-MM-dd HH:mm:ss.SSS} [%contextName] [%thread] %-5level %logger{50} - %msg%n"/>-->
+    <property name="CONSOLE_LOG_PATTERN" value="${FILE_LOG_PATTERN}"/>
+<!--    <property name="CONSOLE_LOG_PATTERN1" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{50} - %msg%n"/>-->
+
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件输出的文件名 -->
+            <FileNamePattern>${LOG_FILE}-%i.log</FileNamePattern>
+            <!-- 日志文件保留天数 -->
+            <MaxHistory>7</MaxHistory>
+            <!-- 日志文件最大的大小 -->
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!-- 格式化输出：%d 表示日期，%thread 表示线程名，%-5level：级别从左显示 5 个字符宽度 %errorMessage：日志消息，%n 是换行符-->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <!--
+        <appender>
+        负责写日志的组件，有两个必要属性name和class
+        常用的控制台输出：ConsoleAppender
+        常用的滚动记录文件：RollingFileAppender
+    -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender" >
+        <!--
+            encoder节点负责两件事情：
+            把日志信息转换为字节数组
+            把字节数组写到输出流
+        -->
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>${CONSOLE_LOG_CHARSET}</charset>
+        </encoder>
+    </appender>
+
+    <!--
+    Logback配置文件与Springboot配置文件的配合
+    springProfile标签，可实现根据不同的springboot配置文件进行不同级别的日志打印
+    该 <springProfile> 标签允许我们更加灵活配置文件，可选地包含或排除配置部分。
+    元素中的任何位置均支持轮廓部分。使用该name属性指定哪个配置文件接受配置。可以使用逗号分隔列表指定多个配置文件。
+    -->
+    <!-- dev 环境（仅输出到控制台） -->
+    <springProfile name="dev">
+<!--        <include resource="org/springframework/boot/logging/logback/console-appender.xml" />-->
+
+        <root level="info">
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+
+    <!-- prod 环境（仅输出到文件中） -->
+    <springProfile name="prod">
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+        <root level="INFO">
+            <appender-ref ref="FILE" />
+        </root>
+    </springProfile>
+</configuration>
+
+

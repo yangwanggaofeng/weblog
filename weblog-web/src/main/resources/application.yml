@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    #默认激活dev环境配置
+    active: dev
+#  jackson:
+#    # 设置后台返参，若字段值为 null, 则不返回
+##    default-property-inclusion: non_null
+#    # 设置日期字段格式
+#    date-format: yyyy-MM-dd HH:mm:ss
+jwt:
+  # 签发人
+  issuser: xiaoqi
+  # 秘钥
+  secret: CKY5nsdXyeNldjLcRpzF5KUcJ8aAYTYz0OvYMfDdpKwyol4CT7EOkrPKIBvwBDZBeLlSyLj8n2MYVnYkIg6Ubw==
+  #token过期时间（单位 分钟）24 *60
+  tokenExpireTime: 1440
+  #token请求头中的key
+  tokenHeaderKey: Authorization
+#  tokenHeaderKey: access_token
+  #token 请求头的value值前缀
+  tokenPrefix: Bearer
