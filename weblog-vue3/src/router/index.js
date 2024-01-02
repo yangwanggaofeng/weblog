@@ -3,6 +3,12 @@ import Login from '@/pages/admin/login.vue'   //使用别名引用
 // import Index from '../pages/frontend/index.vue'
 import Index from '@/pages/frontend/index.vue'
 import AdminIndex from '@/pages/admin/index.vue'
+import Admin from '@/layouts/admin/admin.vue'
+
+import AdminArticleList from '@/pages/admin/article-list.vue'
+import AdminCategoryList from '@/pages/admin/category-list.vue'
+import AdminTagList from '@/pages/admin/tag-list.vue'
+import AdminBlogSetting from '@/pages/admin/blog-setting.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 // 统一在这里声明所有路由
@@ -22,12 +28,47 @@ const routes = [
         }
     },
     {
-        path: '/admin/index', // 路由地址
-        component: AdminIndex, // 对应组件
-        meta: { 
-            title: 'Admin 后台首页' // 页面标题
-        }
+        path: '/admin',//后台首页
+        component: Admin,// 对应 admin.vue 布局文件
+        children:[
+            {
+                path: '/admin/index', // 路由地址
+                component: AdminIndex, // 对应组件
+                meta: { 
+                    title: '仪表盘' // 页面标题
+                }
+            },
+            {
+                path: '/admin/article/list', 
+                component: AdminArticleList, 
+                meta: { 
+                    title: '文章管理' 
+                }
+            },
+            {
+                path: '/admin/category/list', 
+                component: AdminCategoryList, 
+                meta: { 
+                    title: '分类管理' 
+                }
+            },
+            {
+                path: '/admin/tag/list', 
+                component: AdminTagList, 
+                meta: { 
+                    title: '标签管理' 
+                }
+            },
+            {
+                path: '/admin/blog/setting', 
+                component: AdminBlogSetting, 
+                meta: { 
+                    title: '博客设置' 
+                }
+            }
+        ]
     }
+    
 ]
 
 // 创建路由

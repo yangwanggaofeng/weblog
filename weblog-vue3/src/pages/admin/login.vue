@@ -53,7 +53,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus';
 import { showMessage } from '@/composables/utils'
 import 'element-plus/es/components/message/style/css'
-import { setToken } from '@/composables/auth'
+import { setToken } from '@/composables/cookie'
 //定义响应式的表单对象
 const form = reactive({
     username: '',

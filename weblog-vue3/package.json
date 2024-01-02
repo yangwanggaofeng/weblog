@@ -10,6 +10,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "@types/tailwindcss": "^3.1.0",
+    "@vueuse/core": "^10.7.0",
     "@vueuse/integrations": "^10.6.1",
     "animate": "^1.0.0",
     "animate.css": "^4.1.1",
@@ -17,6 +18,7 @@
     "element-plus": "^2.3.9",
     "flowbite": "^2.1.1",
     "nprogress": "^0.2.0",
+    "pinia": "^2.1.7",
     "universal-cookie": "^6.1.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
