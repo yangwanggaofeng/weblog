@@ -11,4 +11,7 @@ export const useMenuStore = defineStore('menu', () => {
   }
   
   return { menuWidth, handleMenuWidth }
+},
+{
+  persist: true
 })

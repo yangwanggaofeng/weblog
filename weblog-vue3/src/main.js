@@ -12,8 +12,13 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 //引入nprogress.css
 import 'nprogress/nprogress.css'
 import '@/permission'
-import { createPinia } from 'pinia'
-const pinia = createPinia()
+// import { createPinia } from 'pinia'
+// import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+// const pinia = createPinia()
+// pinia.use(piniaPluginPersistedstate)
+// 引入全局状态管理 Pinia
+import pinia from '@/stores'
+
 const app = createApp(App)
 app.use(router)     //应用路由
 app.use(pinia)

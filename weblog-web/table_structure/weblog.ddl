@@ -22,3 +22,15 @@ create table if not EXISTS  t_user_role(
     key idx_username (username) using btree
 )engine=innodb default charset=utf8mb4 row_format=dynamic comment='用户角色表';
 
+-- 文章分类列表
+-- drop table if exists weblog.t_category ;
+create table weblog.t_category(
+    id int auto_increment not null comment '分类id',
+    name varchar(60) not null default '' comment '分类名称',
+    create_time datetime not null default current_timestamp comment '创建时间',
+    update_time datetime not null default current_timestamp comment '最后一次更新时间',
+    is_deleted tinyint(2) default 0 comment '逻辑删除标志： 0:未删除; 1:已删除',
+    primary key(id) using btree,
+    unique index uk_name(name) using btree,
+    index idx_create_time(create_time) using btree
+)engine=innodb default charset=utf8mb4 comment='文章分类列表';

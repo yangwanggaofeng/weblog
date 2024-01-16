@@ -54,6 +54,8 @@ import { ElMessage } from 'element-plus';
 import { showMessage } from '@/composables/utils'
 import 'element-plus/es/components/message/style/css'
 import { setToken } from '@/composables/cookie'
+import { useUserStore } from '@/stores/user'
+const userStore = useUserStore()
 //定义响应式的表单对象
 const form = reactive({
     username: '',
@@ -62,6 +64,8 @@ const form = reactive({
 const router = useRouter()
 // 登录按钮加载
 const loading = ref(false)
+
+
 
 // 表单引用
 const formRef = ref(null)
@@ -91,6 +95,7 @@ const onSubmit = () =>{
             console.log('表单验证不通过')
             return false
         }
+        //调用登录接口
         login(form.username, form.password).then((res) =>{
             console.log(res)
             if(res.success == true){
@@ -102,9 +107,11 @@ const onSubmit = () =>{
                 console.log("token==============="+token)
                 setToken(token)
                 showMessage('登录成功')
-                
-                //跳转到后台首页
-                router.push('admin/index')
+
+                // 获取用户信息，并存储到全局状态中
+                userStore.setUserInfo()
+                // 跳转到后台首页
+                router.push('/admin/index')
             }else{
                 let message = res.message
                 console.log(message)
