@@ -3,6 +3,11 @@ import axios from "@/axios";
 export function getCategoryPageList(data){
     return axios.post("/admin/category/list", data)
 }
+//添加分类
 export function addCategory(data){
     return axios.post("/admin/category/add", data)
+}
+//删除分类
+export function deleteCategory(id){
+    return axios.post("/admin/category/delete", {id})
 }
