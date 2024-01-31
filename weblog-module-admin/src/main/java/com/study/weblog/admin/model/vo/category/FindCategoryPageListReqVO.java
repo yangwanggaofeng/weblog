@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -29,9 +30,9 @@ public class FindCategoryPageListReqVO  extends BasePageQuery {
     /**
      * 创建的起始日期
      */
-    private LocalDateTime strarTime;
+    private LocalDate strarTime;
     /**
      * 创建的结束日期
      */
-    private LocalDateTime endTime;
+    private LocalDate endTime;
 }

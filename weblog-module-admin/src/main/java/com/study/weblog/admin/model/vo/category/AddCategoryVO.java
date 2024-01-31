@@ -21,7 +21,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Builder
 @ApiModel(value="添加分类 VO")
-public class AddCategoryVo {
+public class AddCategoryVO {
     @NotBlank(message = "分类名称不能为空")
     @Length(min = 1, max = 10, message = "分类名称字数限制在 1~10之间")
     private String name;
