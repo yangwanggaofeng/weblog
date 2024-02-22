@@ -30,7 +30,7 @@ import java.io.IOException;
 public class loginController {
     @Autowired
     private UserDetailsService userDetailsService;
-    @PostMapping("/login")
+    @PostMapping("/logintest")
     @ApiOperation("获取token")
     public Response getToken(@RequestBody User user) throws ServletException, IOException {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();

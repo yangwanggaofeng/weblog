@@ -52,11 +52,10 @@
         </div>
     </div>
     <!--修改密码-->
-    <el-dialog v-model="dialogVisible" title="修改密码" width="40%" :draggable="true"
+    <!-- <el-dialog v-model="dialogVisible" title="修改密码" width="40%" :draggable="true"
         :close-on-click-modal="false" :close-on-press-escape="false">
         <el-form ref="formRef" :rules="rules" :model="form">
             <el-form-item label="用户名" prop="username" label-width="120px">
-                <!-- 输入框组件 -->
                 <el-input size="large" v-model="form.username" placeholder="请输入用户名" clearable disabled />
             </el-form-item>
             <el-form-item label="密码" prop="password" label-width="120px">
@@ -76,7 +75,22 @@
                 </el-button>
             </span>
         </template>
-    </el-dialog>
+    </el-dialog> -->
+    <FormDialog ref="formDialogRef" title="修改密码" destroryOnClose @submit="onSubmit">
+        <el-form ref="formRef" :rules="rules" :model="form">
+            <el-form-item label="用户名" prop="username" label-width="120px">
+                <el-input size="large" v-model="form.username" placeholder="请输入用户名" clearable disabled />
+            </el-form-item>
+            <el-form-item label="密码" prop="password" label-width="120px">
+                        <el-input size="large" type="password" v-model="form.password" placeholder="请输入密码"
+                             clearable show-password />
+                    </el-form-item>
+                    <el-form-item label="确认密码" prop="rePassword" label-width="120px">
+                        <el-input size="large" type="password" v-model="form.rePassword" placeholder="请确认密码"
+                             clearable show-password />
+                    </el-form-item>
+        </el-form>
+    </FormDialog>
 </template>
 
 <script setup>
@@ -90,12 +104,13 @@ import { useFullscreen } from '@vueuse/core'
 import { useUserStore } from '@/stores/user'
 import { showMessage, showModel } from '@/composables/utils';
 import { updateAdminPassword } from '@/api/admin/user'
+import FormDialog from '@/components/FormDialog.vue';
 //引入菜单store
 const menuStore = useMenuStore()
 const userStore = useUserStore()
 const router = useRouter()
 // 对话框是否显示
-const dialogVisible = ref(false)
+// const dialogVisible = ref(false)
 //收缩按钮的点击事件
 const handleMenuWidth = () => {
     //动态设置菜单的宽度大小
@@ -107,7 +122,8 @@ const handleCommand = (command) => {
     if (command == 'updatePasswrod') {
         console.log('更新密码')
         // 显示修改密码对话框
-        dialogVisible.value = true
+        // dialogVisible.value = true
+        formDialogRef.value.open()
 
     } else if (command == 'logout') {
         console.log('退出登录')
@@ -176,6 +192,8 @@ const rules = {
     ]
 }
 const onSubmit = () =>{
+    // 确认按钮加载 loading
+    formDialogRef.value.showBtnLoading()
     //先验证表单字段
     formRef.value.validate((valid) =>{
         console.log(form.password)
@@ -197,7 +215,8 @@ const onSubmit = () =>{
                 //退出登录
                 userStore.logout()
                 //隐藏对话框
-                dialogVisible.value = false
+                // dialogVisible.value = false
+                formDialogRef.value.close()
                 //跳转到登录页
                 router.push("/login")
 
@@ -207,7 +226,7 @@ const onSubmit = () =>{
                 //提示信息
                 showMessage(message, "error")
             }
-        })
+        }).finally(() => formDialogRef.value.closeBtnLoading())
     })
 
 }
@@ -218,4 +237,6 @@ watch(() => userStore.userInfo.username, (newValue,oldValue) =>{
     // 重新将新的值，设置会 form 对象中
     form.username = newValue
 })
+const formDialogRef = ref(null)
+
 </script>

@@ -69,20 +69,12 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         // 获取当前页、以及每页需要展示的数据数量
         Long current = findCategoryPageListReqVO.getCurrent();
         Long size = findCategoryPageListReqVO.getSize();
-        // 分页对象(查询第几页、每页多少数据)
-        Page<CategoryDo> page = new Page<>(current, size);
-
         //构建查询条件
         String name = findCategoryPageListReqVO.getName();
         LocalDate startDate = findCategoryPageListReqVO.getStrarTime();
         LocalDate endDate = findCategoryPageListReqVO.getEndTime();
-        LambdaQueryWrapper<CategoryDo> wrapper = new LambdaQueryWrapper<>();
-        wrapper.like(StringUtils.isNotBlank(name), CategoryDo::getName, name.trim())
-                .ge(Objects.nonNull(startDate), CategoryDo::getCreateTime, startDate)
-                .le(Objects.nonNull(endDate), CategoryDo::getCreateTime, endDate)
-                .orderByDesc(CategoryDo::getCreateTime);
         //执行分页查询
-        Page<CategoryDo> categoryDoPage = categoryMapper.selectPage(page, wrapper);
+        Page<CategoryDo> categoryDoPage = categoryMapper.selectPageList(current, size, name, startDate, endDate);
         List<CategoryDo>  categoryDoList = categoryDoPage.getRecords();
         //Do 转 VO
         List<FindCategoryPageListRspVO> vos = null;

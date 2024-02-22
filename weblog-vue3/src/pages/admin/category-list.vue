@@ -31,7 +31,7 @@
                     新增
                 </el-button>
             </div>
-            <el-table :data="tableData" stripe style="width: 100%">
+            <el-table :data="tableData"  stripe  style="width: 100%" v-loading="tableLoading">
                 <el-table-column prop="name" label="分类名称" width="180" />
                 <el-table-column prop="createTime" label="创建时间" width="180" />
                 <el-table-column label="操作">
@@ -87,7 +87,7 @@
 </template>
 <script setup>
 // 引入所需图标
-import FormDialog from '@/components/FormDialog .vue';
+import FormDialog from '@/components/FormDialog.vue';
 import { Search, RefreshRight, Delete } from '@element-plus/icons-vue'
 import { ref, reactive } from 'vue';
 import moment from 'moment'
@@ -116,8 +116,11 @@ const current = ref(1)
 const total = ref(0)
 // 每页显示的数据量，给了个默认值 10
 const size = ref(10)
+const tableLoading = ref(false)
 //获取分页数据
 function getTableData() {
+     // 显示表格 loading
+     tableLoading.value = true
     //调用后台分页接口，并传入参数
     getCategoryPageList({
         "current": current.value,
@@ -135,7 +138,7 @@ function getTableData() {
             size.value = res.size
             total.value = res.total
         }
-    })
+    }).finally(() => tableLoading.value = false) //隐藏表格
 }
 //查询条件：开始时间和结束时间
 const startDate = reactive({})
@@ -215,6 +218,7 @@ const rules = {
     ]
 }
 const onSubmit = () => {
+    formDialogRef.value.showBtnLoading()
     //先验证表单字段
     formRef.value.validate((valid) => {
         console.log(form.name)
@@ -240,7 +244,7 @@ const onSubmit = () => {
                 //提示信息
                 showMessage(message, "error")
             }
-        })
+        }).finally(() => formDialogRef.value.closeBtnLoading())
     })
 
 }
@@ -268,4 +272,5 @@ const deleteCategorySubmit = (row) => {
 const addCategoryBtnClick = () => {
     formDialogRef.value.open()
 }
+
 </script>

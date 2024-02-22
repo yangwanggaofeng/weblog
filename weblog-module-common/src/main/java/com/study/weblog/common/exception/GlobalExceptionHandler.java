@@ -4,6 +4,7 @@ import com.study.weblog.common.enums.ResponseCodeEnum;
 import com.study.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -108,6 +109,12 @@ public class GlobalExceptionHandler {
         return Response.fail(errorCode, errorMessage);
 
     }
+    @ExceptionHandler( BadCredentialsException.class )
+//    @ResponseBody
+    public Response<Object> handleTokenException(HttpServletRequest request, Exception e) {
+        log.error("{} request error, ", request.getRequestURI(), e);
+        return Response.fail(e.getMessage());
+    }
     /**
      * 其他类型异常
      * @param request
@@ -126,4 +133,6 @@ public class GlobalExceptionHandler {
         log.info("===============捕获到AccessDeniedException");
         throw accessDeniedException;
     }
+
+
 }

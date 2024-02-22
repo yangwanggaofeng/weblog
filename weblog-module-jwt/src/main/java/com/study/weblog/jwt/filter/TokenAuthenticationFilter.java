@@ -51,38 +51,42 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //从请求头中获取key为Authorization的值 token请求头中的key
-//        String header = request.getHeader("Authorization");
+        // String header = request.getHeader("Authorization");
+        String requestURL = request.getRequestURI();
+        if(requestURL.startsWith("/admin")){
             String header = request.getHeader(tokenHeaderKey);
-        //判断value值是否以Bearer开头
-        if(StringUtils.startsWith(header, tokenPrefix)){
-            //截取token令牌
-            String token = StringUtils.substring(header, 7);
-            log.info("Token :{}", token);
-            if(StringUtils.isNotBlank(token)){
-                try {
-                    jwtTokenHelper.parseToken(token);
-                }catch (UnsupportedJwtException | MalformedJwtException | SignatureException |IllegalArgumentException e){
-                    authenticationEntryPoint.commence(request, response, new AuthenticationServiceException("Token非法"));
-                    return ;
-                }catch (ExpiredJwtException e){
-                    authenticationEntryPoint.commence(request, response, new AuthenticationServiceException("Token 已失效"));
-                }
-                //从token中解析出用户名
-                String username = jwtTokenHelper.getUsernameByToken(token);
-                if(StringUtils.isNotBlank(username)
-                        && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())){
-                    //根据用户名获取用户详情信息
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                    //将用户信息存入authentication，方便后续校验
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
-                            userDetails.getAuthorities());
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    //将authencation 存入ThreadLocal，方便后续获取用户信息
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
+            //判断value值是否以Bearer开头
+            if(StringUtils.startsWith(header, tokenPrefix)){
+                //截取token令牌
+                String token = StringUtils.substring(header, 7);
+                log.info("Token :{}", token);
+                if(StringUtils.isNotBlank(token)){
+                    try {
+                        jwtTokenHelper.parseToken(token);
+                    }catch (UnsupportedJwtException | MalformedJwtException | SignatureException |IllegalArgumentException e){
+                        authenticationEntryPoint.commence(request, response, new AuthenticationServiceException("Token非法"));
+                        return ;
+                    }catch (ExpiredJwtException e){
+                        authenticationEntryPoint.commence(request, response, new AuthenticationServiceException("Token 已失效"));
+                    }
+                    //从token中解析出用户名
+                    String username = jwtTokenHelper.getUsernameByToken(token);
+                    if(StringUtils.isNotBlank(username)
+                            && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())){
+                        //根据用户名获取用户详情信息
+                        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                        //将用户信息存入authentication，方便后续校验
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
+                                userDetails.getAuthorities());
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        //将authencation 存入ThreadLocal，方便后续获取用户信息
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
 
+                    }
                 }
             }
         }
+
         //继续执行下一个过滤器
         filterChain.doFilter(request, response);
     }

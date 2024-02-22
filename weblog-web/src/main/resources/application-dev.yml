@@ -39,3 +39,15 @@ spring:
     user:
       name: admin #登录用户名
       password: weblogtest #登录密码
+#=================================================================
+# minio
+#=================================================================
+minio:
+  #MinIO 服务器的地址
+  endpoint: http://192.168.8.125:9000
+  #运行容器时，指定的接入 key。
+  accessKey: quanxiaoha
+  #运行容器时，指定的秘钥 key
+  secretKey: quanxiaoha
+  #存储桶（bucket）的名称。
+  bucketName: weblog

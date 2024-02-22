@@ -15,6 +15,11 @@
     <description>weblog-admin (负责管理后台相关功能)</description>
 
     <dependencies>
+        <!-- 对象存储 Minio -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
         <!--添加 security 依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
