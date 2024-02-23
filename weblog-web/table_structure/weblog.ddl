@@ -34,3 +34,17 @@ create table weblog.t_category(
     unique index uk_name(name) using btree,
     index idx_create_time(create_time) using btree
 )engine=innodb default charset=utf8mb4 comment='文章分类列表';
+
+create table weblog.t_blog_settings(
+    id bigint(20)  not null auto_increment comment 'id',
+    logo varchar(120) not null default '' comment '博客Logo',
+    name varchar(100) not null default '' comment '作者名',
+    author varchar(100) not null default '' comment '博客名称',
+    introduction varchar(200) not null default '' comment '介绍语',
+    avatar varchar(200) not null default '' comment '作者头像',
+    github_homepage varchar(100) not null default '' comment 'Github 主页访问地址',
+    csdn_homepage varchar(100) not null default '' comment 'CSDN 主页访问地址',
+    gitee_homepage varchar(100) not null default '' comment 'Gitee 主页访问地址',
+    zhihu_homepage varchar(100) not null default '' comment '知乎 主页访问地址',
+    primary key (id)
+)engine=innodb default charset=utf8mb4 comment='博客设置表';

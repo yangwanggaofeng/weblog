@@ -7,8 +7,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.study.weblog.common.domain.dos.CategoryDo;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 public interface CategoryMapper extends BaseMapper<CategoryDo> {
