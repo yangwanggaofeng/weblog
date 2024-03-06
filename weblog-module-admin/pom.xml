@@ -15,6 +15,11 @@
     <description>weblog-admin (负责管理后台相关功能)</description>
 
     <dependencies>
+        <!-- Mapstruct 属性映射 -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
         <!-- 对象存储 Minio -->
         <dependency>
             <groupId>io.minio</groupId>
