@@ -30,7 +30,7 @@ public class AdminFileController {
     @PostMapping("/file/upload")
     @ApiOperation(value = "文件上传")
     @ApiOperationLog(description = "文件上传")
-    public Response uploadFile(@RequestParam MultipartFile file){
+    public Response uploadFile(@RequestParam("file") MultipartFile file){
         return adminFileService.uploadFile(file);
     }
 }

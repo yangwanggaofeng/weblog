@@ -1,4 +1,8 @@
 <template>
+    <!-- 固钉组件，通过设置 offset 属性来改变吸顶距离，默认值为 0。 -->
+<el-affix :offset="0">
+       
+  
     <!-- 设置背景色为白色、高度为 64px，padding-right 为 4， border-bottom 为 slate 200 -->
     <div class="bg-white h-[64px] pr-4  border-b border-slate-100 flex">
 
@@ -91,6 +95,7 @@
                     </el-form-item>
         </el-form>
     </FormDialog>
+</el-affix>  
 </template>
 
 <script setup>
