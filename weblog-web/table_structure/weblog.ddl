@@ -74,3 +74,23 @@ create table if not exists weblog.t_article_content(
     primary key (id) using btree,
     key idx_article_id (article_id) using btree
 )engine=innodb default charset=utf8mb4 row_format=dynamic comment '文章内容正文';
+-- weblog.t_article_categroy_rel definition
+
+CREATE TABLE `t_article_categroy_rel` (
+                                          `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                          `article_id` bigint unsigned NOT NULL COMMENT '文章id',
+                                          `category_id` bigint unsigned NOT NULL COMMENT '文章分类id',
+                                          PRIMARY KEY (`id`) USING BTREE,
+                                          UNIQUE KEY `uni_article_id` (`article_id`) USING BTREE,
+                                          KEY `idx_category_id` (`category_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='文章所属分类关联表';
+-- weblog.t_article_tag_rel definition
+
+CREATE TABLE `t_article_tag_rel` (
+     `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+     `article_id` bigint unsigned NOT NULL COMMENT '文章id',
+     `tag_id` bigint unsigned NOT NULL COMMENT '文章标签id',
+     PRIMARY KEY (`id`) USING BTREE,
+     KEY `idx_article_id` (`article_id`) USING BTREE,
+     KEY `idx_tag_id` (`tag_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='文章所属标签关联表';

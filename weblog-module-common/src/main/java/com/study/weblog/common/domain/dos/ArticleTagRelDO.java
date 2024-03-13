@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@TableName(value = "article_tag_rel" ,schema = "weblog")
+@TableName(value = "t_article_tag_rel" ,schema = "weblog")
 public class ArticleTagRelDO {
     @TableId(type = IdType.AUTO)
     private Long id;

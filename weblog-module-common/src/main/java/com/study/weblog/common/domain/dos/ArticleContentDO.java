@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@TableName(value = "article_content" ,schema = "weblog")
+@TableName(value = "t_article_content" ,schema = "weblog")
 public class ArticleContentDO {
     @TableId(type = IdType.AUTO)
     private Long id;

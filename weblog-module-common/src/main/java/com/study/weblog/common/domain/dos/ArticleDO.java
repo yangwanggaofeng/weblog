@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@TableName(value = "article" ,schema = "weblog")
+@TableName(value = "t_article" ,schema = "weblog")
 public class ArticleDO {
     @TableId(type = IdType.AUTO)
     private Long id;
