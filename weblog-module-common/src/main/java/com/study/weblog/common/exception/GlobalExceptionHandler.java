@@ -109,12 +109,12 @@ public class GlobalExceptionHandler {
         return Response.fail(errorCode, errorMessage);
 
     }
-    @ExceptionHandler( BadCredentialsException.class )
-//    @ResponseBody
-    public Response<Object> handleTokenException(HttpServletRequest request, Exception e) {
-        log.error("{} request error, ", request.getRequestURI(), e);
-        return Response.fail(e.getMessage());
-    }
+//    @ExceptionHandler( BadCredentialsException.class )
+////    @ResponseBody
+//    public Response<Object> handleTokenException(HttpServletRequest request, Exception e) {
+//        log.error("{} request error, ", request.getRequestURI(), e);
+//        return Response.fail(e.getMessage());
+//    }
     /**
      * 其他类型异常
      * @param request

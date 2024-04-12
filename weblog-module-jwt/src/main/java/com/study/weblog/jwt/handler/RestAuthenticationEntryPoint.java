@@ -17,7 +17,7 @@ import java.io.IOException;
 
 /**
  * @ClassName RestAuthenticationEntryPoint
- * @Description TODO
+ * @Description 用户未登录访问受保护的资源
  * @Author zhang
  * @Date 2023/11/21
  * @Version 1.0

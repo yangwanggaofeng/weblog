@@ -18,7 +18,7 @@ import java.io.IOException;
 
 /**
  * @ClassName RestAuthenticationSuccessHandler
- * @Description TODO
+ * @Description 认证成功处理器
  * @Author zhang
  * @Date 2023/11/19
  * @Version 1.0

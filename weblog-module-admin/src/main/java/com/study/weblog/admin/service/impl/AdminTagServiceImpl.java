@@ -9,10 +9,13 @@ import com.study.weblog.admin.model.vo.tag.DeleteTagVO;
 import com.study.weblog.admin.model.vo.tag.FindTagPageListReqVO;
 import com.study.weblog.admin.model.vo.tag.SearchTagVO;
 import com.study.weblog.admin.service.AdminTagService;
+import com.study.weblog.common.domain.dos.ArticleTagRelDO;
 import com.study.weblog.common.domain.dos.TagDO;
 import com.study.weblog.common.domain.dos.TagDO;
+import com.study.weblog.common.domain.mapper.ArticleTagRelMapper;
 import com.study.weblog.common.domain.mapper.TagMapper;
 import com.study.weblog.common.enums.ResponseCodeEnum;
+import com.study.weblog.common.exception.BizException;
 import com.study.weblog.common.model.vo.SelectRspVO;
 import com.study.weblog.common.utils.PageResponse;
 import com.study.weblog.common.utils.Response;
@@ -41,6 +44,8 @@ import java.util.stream.Collectors;
 public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implements AdminTagService {
     @Autowired
     private TagMapper tagMapper;
+    @Autowired
+    private ArticleTagRelMapper articleTagRelMapper;
 
     /**
      * 添加分类
@@ -94,12 +99,19 @@ public class AdminTagServiceImpl extends ServiceImpl<TagMapper, TagDO> implement
     }
 
     /**
-     * 删除分类
+     * 删除标签
      * @param deleteTagVO
      * @return
      */
     @Override
     public Response deleteTag(DeleteTagVO deleteTagVO) {
+        Long tagId = deleteTagVO.getId();
+        // 校验该标签下是否有关联的文章，若有，则不允许删除，提示用户需要先删除标签下的文章
+        ArticleTagRelDO articleTagRelDO = articleTagRelMapper.selectByTagId(tagId);
+        if(Objects.nonNull(articleTagRelDO)){
+            log.warn("==>此分类下包含文章，无法删除，标签ID:{}",tagId);
+            throw new BizException(ResponseCodeEnum.TAG_CAN_NOT_DELETE);
+        }
         int count = tagMapper.deleteById(deleteTagVO.getId());
         return count >0 ? Response.success() : Response.fail(ResponseCodeEnum.TAG_NAME_IS_NOT_EXISTED);
     }

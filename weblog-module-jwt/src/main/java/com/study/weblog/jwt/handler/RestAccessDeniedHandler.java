@@ -15,7 +15,7 @@ import java.io.IOException;
 
 /**
  * @ClassName RestAccessDeniedHandler
- * @Description TODO
+ * @Description 登录成功访问收保护的资源，但是权限不够
  * @Author zhang
  * @Date 2023/11/21
  * @Version 1.0

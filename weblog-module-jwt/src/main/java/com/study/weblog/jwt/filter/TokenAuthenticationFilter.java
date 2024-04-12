@@ -62,12 +62,17 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 log.info("Token :{}", token);
                 if(StringUtils.isNotBlank(token)){
                     try {
-                        jwtTokenHelper.parseToken(token);
+                        // 校验 Token 是否可用, 若解析异常，针对不同异常做出不同的响应参数
+                        //todo 分析
+//                        jwtTokenHelper.parseToken(token);
+                        jwtTokenHelper.validateToken(token);
                     }catch (UnsupportedJwtException | MalformedJwtException | SignatureException |IllegalArgumentException e){
+                        // 抛出异常，统一让 AuthenticationEntryPoint 处理响应参数
                         authenticationEntryPoint.commence(request, response, new AuthenticationServiceException("Token非法"));
-                        return ;
+                        return;
                     }catch (ExpiredJwtException e){
                         authenticationEntryPoint.commence(request, response, new AuthenticationServiceException("Token 已失效"));
+                        return;
                     }
                     //从token中解析出用户名
                     String username = jwtTokenHelper.getUsernameByToken(token);

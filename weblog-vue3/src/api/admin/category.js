@@ -11,3 +11,8 @@ export function addCategory(data){
 export function deleteCategory(id){
     return axios.post("/admin/category/delete", {id})
 }
+//获取分类select
+export function getCategorySelectList(){
+    return axios.post("/admin/category/select/list")
+}
+

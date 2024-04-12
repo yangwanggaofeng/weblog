@@ -22,7 +22,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
  **/
 @Configuration
 @EnableSwagger2WebMvc
-@Profile("dev")
+@Profile("sit")
+//@Profile("dev")
 public class Knife4jConfig {
     @Bean("adminApi")
     public Docket createApiDoc(){

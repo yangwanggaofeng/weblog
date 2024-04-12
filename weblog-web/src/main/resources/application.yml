@@ -1,7 +1,7 @@
 spring:
   profiles:
     #默认激活dev环境配置
-    active: dev
+    active: sit
 #  jackson:
 #    # 设置后台返参，若字段值为 null, 则不返回
 ##    default-property-inclusion: non_null
@@ -13,7 +13,8 @@ jwt:
   # 秘钥
   secret: CKY5nsdXyeNldjLcRpzF5KUcJ8aAYTYz0OvYMfDdpKwyol4CT7EOkrPKIBvwBDZBeLlSyLj8n2MYVnYkIg6Ubw==
   #token过期时间（单位 分钟）24 *60
-  tokenExpireTime: 1440
+  #tokenExpireTime: 1440
+  tokenExpireTime: 1
   #token请求头中的key
   tokenHeaderKey: Authorization
 #  tokenHeaderKey: access_token

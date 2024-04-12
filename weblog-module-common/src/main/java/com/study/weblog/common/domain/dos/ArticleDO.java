@@ -32,5 +32,5 @@ public class ArticleDO {
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
     private Boolean isDelete;
-    private Long redNum;
+    private Long readNum;
 }

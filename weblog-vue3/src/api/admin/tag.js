@@ -11,3 +11,11 @@ export function addTag(data){
 export function deleteTag(id){
     return axios.post("/admin/tag/delete", {id})
 }
+//获取标签select
+export function getTagSelectList(){
+    return axios.post("/admin/tag/select/list")
+}
+//搜索标签
+export function searchTags(key){
+    return axios.post("/admin//tag/search", {key})
+}
