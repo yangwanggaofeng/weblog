@@ -13,7 +13,7 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
     default Page<ArticleDO> selectPageList(Long current, Long size,String titleName, LocalDateTime startTime, LocalDateTime endTime){
         Page<ArticleDO> page = new Page<>(current, size);
         LambdaQueryWrapper<ArticleDO> wrapper = new LambdaQueryWrapper();
-        wrapper.like(StringUtils.isNotBlank(titleName),ArticleDO::getTitle, titleName.trim())
+        wrapper.like(StringUtils.isNotBlank(titleName),ArticleDO::getTitle, titleName)
                 .ge(Objects.nonNull(startTime), ArticleDO::getCreateTime, startTime)
                 .le(Objects.nonNull(endTime), ArticleDO::getCreateTime, endTime)
                 .orderByDesc(ArticleDO::getCreateTime);

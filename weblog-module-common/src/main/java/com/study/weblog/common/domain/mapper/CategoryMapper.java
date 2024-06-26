@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.study.weblog.common.domain.dos.CategoryDo;
+import com.study.weblog.common.domain.dos.CategoryDO;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-public interface CategoryMapper extends BaseMapper<CategoryDo> {
+public interface CategoryMapper extends BaseMapper<CategoryDO> {
     /**
      * 分页查询分类信息
      * @param current 当前页
@@ -19,24 +19,24 @@ public interface CategoryMapper extends BaseMapper<CategoryDo> {
      * @param endDate   结束日期
      * @return
      */
-    default Page<CategoryDo> selectPageList(long current, long size, String name, LocalDate startDate, LocalDate endDate){
-        Page<CategoryDo> page = new Page<>(current, size);
-        LambdaQueryWrapper<CategoryDo> wrapper = new LambdaQueryWrapper<>();
-        wrapper.like(StringUtils.isNotBlank(name), CategoryDo::getName, name.trim())
-                .ge(Objects.nonNull(startDate), CategoryDo::getCreateTime, startDate)
-                .le(Objects.nonNull(endDate), CategoryDo::getCreateTime, endDate)
-                .orderByDesc(CategoryDo::getCreateTime);
+    default Page<CategoryDO> selectPageList(long current, long size, String name, LocalDate startDate, LocalDate endDate){
+        Page<CategoryDO> page = new Page<>(current, size);
+        LambdaQueryWrapper<CategoryDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(StringUtils.isNotBlank(name), CategoryDO::getName, name.trim())
+                .ge(Objects.nonNull(startDate), CategoryDO::getCreateTime, startDate)
+                .le(Objects.nonNull(endDate), CategoryDO::getCreateTime, endDate)
+                .orderByDesc(CategoryDO::getCreateTime);
         //执行分页查询
-        Page<CategoryDo> categoryDoPage = selectPage(page, wrapper);
+        Page<CategoryDO> categoryDoPage = selectPage(page, wrapper);
         return categoryDoPage;
     }
     /**
      * 根据名称查询
      */
-    default CategoryDo selectByName(String categoryName){
+    default CategoryDO selectByName(String categoryName){
         //构建查询条件
-        LambdaQueryWrapper<CategoryDo> wrapper = new LambdaQueryWrapper();
-        wrapper.eq(CategoryDo::getName, categoryName);
+        LambdaQueryWrapper<CategoryDO> wrapper = new LambdaQueryWrapper();
+        wrapper.eq(CategoryDO::getName, categoryName);
         //执行查询
         return selectOne(wrapper);
     }

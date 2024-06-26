@@ -72,7 +72,7 @@ public class AdminArticleServiceImpl implements AdminArticleService {
         articleContentMapper.insert(articleContentDO);
         //处理文章分类
         Long categoryId = publishArticleReqVO.getCategoryId();
-        CategoryDo categoryDo = categoryMapper.selectById(categoryId);
+        CategoryDO categoryDo = categoryMapper.selectById(categoryId);
         if(Objects.isNull(categoryDo)){
             log.error("===> 文章分类不存在，categoryId:{}", categoryId);
             throw new BizException(ResponseCodeEnum.CATEGORY_NOT_EXISTED);
@@ -179,7 +179,7 @@ public class AdminArticleServiceImpl implements AdminArticleService {
                 .build();
         articleContentMapper.updateByArticleId(articleContentDO);
         //3. 查询文章分类是否存在
-        CategoryDo categoryDo = categoryMapper.selectById(updateArticleReqVO.getCategoryId());
+        CategoryDO categoryDo = categoryMapper.selectById(updateArticleReqVO.getCategoryId());
         if(Objects.isNull(categoryDo)){
             log.error("==> 该文章分类不存在, articleId: {}", articleId);
             throw new BizException(ResponseCodeEnum.CATEGORY_NOT_EXISTED);

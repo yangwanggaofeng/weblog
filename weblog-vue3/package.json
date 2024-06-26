@@ -15,6 +15,7 @@
     "animate": "^1.0.0",
     "animate.css": "^4.1.1",
     "axios": "^1.6.2",
+    "caniuse-lite": "^1.0.30001634",
     "element-plus": "^2.3.9",
     "flowbite": "^2.1.1",
     "md-editor-v3": "^4.12.2",
@@ -23,6 +24,7 @@
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "universal-cookie": "^6.1.1",
+    "update-browserslist-db": "^1.0.16",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },

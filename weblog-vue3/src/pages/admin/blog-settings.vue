@@ -99,14 +99,14 @@ const rules = {
     avatar: [{ required: true, message: '请上传博客头像', trigger: 'blur' }],
     introduction: [{ required: true, message: '请输入介绍语', trigger: 'blur' }],
 }
-// 是否开启 GitHub
-const isGithubChecked = ref(false)
+// 是否开启 
+let isGithubChecked = ref(false)
 // 是否开启 Gitee
-const isGiteeChecked = ref(false)
+let isGiteeChecked = ref(false)
 // 是否开启 zhihu
-const isZhihuChecked = ref(false)
+let isZhihuChecked = ref(false)
 // 是否开启 csdn
-const isCsdnChecked = ref(false)
+let isCsdnChecked = ref(false)
 
 // 监听 Github Switch 改变事件
 const githubSwitchChange = (checked) => {

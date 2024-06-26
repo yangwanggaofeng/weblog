@@ -1,95 +1,185 @@
 <template>
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">小七的博客</span>
-            </a>
-            <!--在父级 <div> 中添加样式 items-center, 以及边距调整 -->
-            <div class="flex items-center md:order-2">
-                <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search"
-                    aria-expanded="false"
-                    class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1">
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
-                    <span class="sr-only">Search</span>
-                </button>
-                <div class="relative hidden mr-2 md:block">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                        <span class="sr-only">Search icon</span>
+    <Header></Header>
+    <!--主内容区域-->
+    <main class="container max-w-screen-xl mx-auto p-4">
+        <!--  grid 表格布局，分为 4 列，元素间隔为 gap-4 -->
+        <div class="grid grid-cols-4 gap-7">
+            <!-- 左边栏，占用 3 列 -->
+            <div class="col-span-4  md:col-span-3 mb-3">
+
+                <!-- 文章列表，grid 表格布局，分为 2 列 -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div v-for="(article, index) in articles" :key="index" class="col-span-2 md:col-span-1 ">
+                        <div
+                            class="bg-white h-full border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+                            <!--文章封面-->
+                            <a href="#">
+                                <!--注意此处是:src 而不是src-->
+                                <img class="rounded-t-lg h-48 w-full" :src="article.cover" />
+                            </a>
+                            <div class="p-5">
+                                <!-- 标签 -->
+                                <div class="mb-3">
+                                    <span v-for="tag, tagIndex in article.tags" :key="tagIndex"
+                                        class="cursor-pointer bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-green-200 hover:text-green-900 dark:bg-green-900 dark:text-green-300">
+                                        {{ tag.name }}
+                                    </span>
+                                </div>
+                                <!-- 文章标题 -->
+                                <a href="#">
+                                    <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                        {{ article.title }}</h2>
+                                </a>
+                                <!-- 文章摘要 -->
+                                <p v-if="article.summary" class="mb-3 font-normal text-gray-500 dark:text-gray-400">
+                                    {{ article.summary }}
+                                </p>
+                                <!-- 文章发布时间、所属分类 -->
+                                <p class="flex items-center font-normal text-gray-400 text-sm dark:text-gray-400">
+                                    <!-- 发布时间 -->
+                                    <svg class="inline w-3 h-3 mr-2 text-gray-400 dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 1v3m5-3v3m5-3v3M1 7h18M5 11h10M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" />
+                                    </svg>
+                                    {{ article.createDate }}
+
+                                    <!-- 所属分类 -->
+                                    <svg class="inline w-3 h-3 ml-5 mr-2 text-gray-400 dark:text-white"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 18 18">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M1 5v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H1Zm0 0V2a1 1 0 0 1 1-1h5.443a1 1 0 0 1 .8.4l2.7 3.6H1Z" />
+                                    </svg>
+                                    <a href="#" class="text-gray-400 hover:underline">{{ article.category.name }}</a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <input type="text" id="search-navbar"
-                        class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="请输入关键词...">
                 </div>
-                <div class="text-gray-900 ml-1 mr-1 hover:text-blue-700" @click="$router.push('/login')" >登录</div>
-                <button data-collapse-toggle="navbar-search" type="button"
-                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                    aria-controls="navbar-search" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 17 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 1h15M1 7h15M1 13h15" />
-                    </svg>
-                </button>
+                <nav aria-label="Page navigation example" class="mt-10 flex justify-center ">
+                    <ul class="flex items-center -space-x-px h-10 text-base">
+                        <li>
+                            <a @click="getArticles(current -1 )"
+                                class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                :class="[current > 1 ? '' : 'cursor-not-allowed']"
+                                >
+                                <span class="sr-only">上一页</span>
+                                <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M5 1 1 5l4 4" />
+                                </svg>
+                            </a>
+                        </li>
+                        <!--页码-->
+                        <li v-for="pageNo, index in pages" :key="index">
+                            <a @click="getArticles(pageNo)"
+                                class="flex items-center justify-center px-4 h-10 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                :class="[pageNo == current ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700' : 'text-gray-500  hover:bg-gray-100 hover:text-gray-700']">{{
+                                index + 1 }}</a>
+
+                        </li>
+
+                        <!-- <li>
+                            <a href="#"
+                                class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                <span class="sr-only">Previous</span>
+                                <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M5 1 1 5l4 4" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                        </li>
+                        <li>
+                            <a href="#" aria-current="page"
+                                class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+                        </li>-->
+                        <li>
+                            <a @click="getArticles(current +1 )"
+                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                :class="[current < pages ? '' :'cursor-not-allowed']">
+                                <span class="sr-only">下一页</span>
+                                <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 9 4-4-4-4" />
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
-                <div class="relative mt-3 md:hidden">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </div>
-                    <input type="text" id="search-navbar"
-                        class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search...">
-                </div>
-                <ul
-                    class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                            aria-current="page">首页</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">分类</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">标签</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">归档</a>
-                    </li>
-                </ul>
+
+            <!-- 右边侧边栏，占用一列 -->
+            <div class="col-span-4 md:col-span-1">
+                <UserInfoCard></UserInfoCard>
             </div>
         </div>
-    </nav>
+
+    </main>
+    <Footer></Footer>
 </template>
 
+
+
 <script setup>
-/*
-onMounted是一个生命周期钩子（lifecycle hook）。生命周期钩子是 Vue 组件在其生命周期的不同阶段可以调用的函数。
-onMounted` 钩子在组件被挂载到 DOM 之后立即调用。这意味着，当此钩子被触发时，你可以安全地访问和操作组件的 DOM 元素；
-*/
-import { onMounted } from 'vue';
-import { initCollapses } from 'flowbite';
-// 初始化 flowbit 相关组件
-//initCollapses() 用于初始化 flowbite 的 collapse 组件，有了它，当页面在移动端展示时，点击菜单收缩按钮，可查看隐藏的菜单选项，如下图所示：
+import Header from '@/layouts/frontend/components/Header.vue'
+import Footer from '@/layouts/frontend/components/Footer.vue';
+import { initTooltips } from 'flowbite'
+import { onMounted, ref } from 'vue'
+import { getArticlePageList } from '@/api/frontend/article.js'
+import UserInfoCard from '@/layouts/frontend/components/userInfoCard.vue';
+// initialize components based on data attribute selectors
 onMounted(() => {
-    initCollapses();
+    initTooltips();
 })
+//文章集合
+const articles = ref([])
+//当前页码
+const current = ref(1)
+//每页显示条数
+const size = ref(2)
+//总文章个数
+const total = ref(0)
+//总页数
+const pages = ref(0)
+//获取指定页的文章数据
+function getArticles(currentNo) {
+    //上下页是否能够点击判断，当跳转上一页小于1时；则不允许跳转；当要跳转下一页且页码大于总页数时，则不允许跳转
+    if(currentNo <1 || (pages.value >0 && currentNo > pages.value)) {
+        console.log("非法页码")
+        return
+    }
+    //调用分页接口渲染数据
+    getArticlePageList({ current: currentNo, size: size.value }).then((res) => {
+        if (res.success) {
+            articles.value = res.data
+            current.value = res.current
+            total.value = res.total
+            size.value = res.size
+            pages.value = res.pages
+        }
+    })
+}
+getArticles(current.value)
 </script>

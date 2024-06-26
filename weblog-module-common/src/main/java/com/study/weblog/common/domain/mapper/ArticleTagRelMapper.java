@@ -35,4 +35,14 @@ public interface ArticleTagRelMapper extends InsertBatchMapper<ArticleTagRelDO> 
         .eq(ArticleTagRelDO::getTagId, tagId)
         .last("limit 1"));
     }
+
+    /**
+     * 根据文章 ID 集合批量查询
+     * @param articleIds
+     * @return
+     */
+    default List<ArticleTagRelDO> selectByArticleIds(List<Long> articleIds){
+        return selectList(Wrappers.<ArticleTagRelDO>lambdaQuery()
+        .in(ArticleTagRelDO::getArticleId,  articleIds));
+    }
 }

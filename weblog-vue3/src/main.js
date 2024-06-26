@@ -22,6 +22,8 @@ import pinia from '@/stores'
 const app = createApp(App)
 app.use(router)     //应用路由
 app.use(pinia)
+//解决浏览器调试没有Pinia问题
+// const app = createApp(App).use(pinia).use(router).mount('#app')
 
 // 引入图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

@@ -1,8 +1,9 @@
 import router from '@/router/index'
 import { getToken } from '@/composables/cookie'
 import { showMessage } from '@/composables/utils'
-import { showPageLoading } from './composables/utils'
-import { hidePageLoading } from './composables/utils'
+import { showPageLoading } from '@/composables/utils'
+import { hidePageLoading } from '@/composables/utils'
+import { useBlogSettingsStore } from '@/stores/blogsettings'
 
 
 
@@ -21,7 +22,16 @@ router.beforeEach((to, from, next) => {
         showMessage('请勿重复登录', 'warning')
         // 跳转后台首页
         next({path: '/admin/index'})
-
+    // }else{
+    //         next()
+    // }
+    }else if (!to.path.startsWith("/admin")){
+        //如果访问的非 /admin的前缀路由
+        //引入博客设置 store
+        let blogSettingStore = useBlogSettingsStore()
+        //获取博客设置信息并保存到全局中
+        blogSettingStore.getBlogSettings()
+        next()
     }else{
         next()
     }

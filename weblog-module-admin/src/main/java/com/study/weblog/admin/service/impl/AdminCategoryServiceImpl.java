@@ -1,7 +1,5 @@
 package com.study.weblog.admin.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.study.weblog.admin.model.vo.category.AddCategoryVO;
 import com.study.weblog.admin.model.vo.category.DeleteCategoryVO;
@@ -9,7 +7,7 @@ import com.study.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
 import com.study.weblog.admin.model.vo.category.FindCategoryPageListRspVO;
 import com.study.weblog.admin.service.AdminCategoryService;
 import com.study.weblog.common.domain.dos.ArticleCategoryRelDO;
-import com.study.weblog.common.domain.dos.CategoryDo;
+import com.study.weblog.common.domain.dos.CategoryDO;
 import com.study.weblog.common.domain.mapper.ArticleCategoryRelMapper;
 import com.study.weblog.common.domain.mapper.CategoryMapper;
 import com.study.weblog.common.enums.ResponseCodeEnum;
@@ -18,7 +16,6 @@ import com.study.weblog.common.model.vo.SelectRspVO;
 import com.study.weblog.common.utils.PageResponse;
 import com.study.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -53,19 +50,19 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     public Response addCategory(AddCategoryVO addCategoryVo) {
         String categoryName = addCategoryVo.getName();
         //判断分类是否存在
-        CategoryDo categoryDo = categoryMapper.selectByName(categoryName);
+        CategoryDO categoryDo = categoryMapper.selectByName(categoryName);
 
         if(Objects.nonNull(categoryDo)){
             log.warn("分类名称： {}，此分类已存在", categoryName);
             throw new BizException(ResponseCodeEnum.CATEGORY_NAME_IS_EXISTED);
         }
         //构建DO类
-        CategoryDo insertCategoryDo = CategoryDo.builder()
+        CategoryDO insertCategoryDO = CategoryDO.builder()
                 .name(categoryName.trim())
                 .build();
 
         //执行 insert
-        categoryMapper.insert(insertCategoryDo);
+        categoryMapper.insert(insertCategoryDO);
         return Response.success();
     }
 
@@ -79,12 +76,12 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         LocalDate startDate = findCategoryPageListReqVO.getStrarTime();
         LocalDate endDate = findCategoryPageListReqVO.getEndTime();
         //执行分页查询
-        Page<CategoryDo> categoryDoPage = categoryMapper.selectPageList(current, size, name, startDate, endDate);
-        List<CategoryDo>  categoryDoList = categoryDoPage.getRecords();
+        Page<CategoryDO> categoryDoPage = categoryMapper.selectPageList(current, size, name, startDate, endDate);
+        List<CategoryDO> categoryDOList = categoryDoPage.getRecords();
         //Do 转 VO
         List<FindCategoryPageListRspVO> vos = null;
-        if(!CollectionUtils.isEmpty(categoryDoList)){
-            vos = categoryDoList.stream()
+        if(!CollectionUtils.isEmpty(categoryDOList)){
+            vos = categoryDOList.stream()
                     .map(categoryDo -> FindCategoryPageListRspVO.builder()
                             .id(categoryDo.getId())
                             .name(categoryDo.getName())
@@ -115,13 +112,13 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     @Override
     public Response findCategorySelectList() {
         //查询所有分类
-        List<CategoryDo> categoryDoList = categoryMapper.selectList(null);
+        List<CategoryDO> categoryDOList = categoryMapper.selectList(null);
         //DO转VO
         List<SelectRspVO> selectRspVOList = null;
         //如果分类数据不为空
-        if(!CollectionUtils.isEmpty(categoryDoList)){
+        if(!CollectionUtils.isEmpty(categoryDOList)){
             //将分类id作为value值，将分类名称作为label展示
-            selectRspVOList = categoryDoList.stream()
+            selectRspVOList = categoryDOList.stream()
                     .map(categoryDo -> SelectRspVO.builder()
                             .label(categoryDo.getName())
                             .value(categoryDo.getId())
