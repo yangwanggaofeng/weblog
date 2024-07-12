@@ -53,7 +53,7 @@
                                             stroke-width="2"
                                             d="M1 5v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H1Zm0 0V2a1 1 0 0 1 1-1h5.443a1 1 0 0 1 .8.4l2.7 3.6H1Z" />
                                     </svg>
-                                    <a href="#" class="text-gray-400 hover:underline">{{ article.category.name }}</a>
+                                    <a @click="goCategoryArticleListPage(article.category.id, article.category.name)" class="text-gray-400 hover:underline">{{ article.category.name }}</a>
                                 </p>
                             </div>
                         </div>
@@ -132,7 +132,14 @@
 
             <!-- 右边侧边栏，占用一列 -->
             <div class="col-span-4 md:col-span-1">
+                <!-- 博主信息模块 -->
                 <UserInfoCard></UserInfoCard>
+                
+                 <!-- 分类模块 -->
+                <CategoryListCard></CategoryListCard>
+
+                <!-- 标签模块 -->
+                <TagListCard></TagListCard>
             </div>
         </div>
 
@@ -149,6 +156,18 @@ import { initTooltips } from 'flowbite'
 import { onMounted, ref } from 'vue'
 import { getArticlePageList } from '@/api/frontend/article.js'
 import UserInfoCard from '@/layouts/frontend/components/userInfoCard.vue';
+import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue';
+import TagListCard from '@/layouts/frontend/components/TagListCard.vue';
+import { getCategoryPageList } from '@/api/frontend/category.js'
+import { useRouter } from 'vue-router';
+//引入路由
+const router = useRouter()
+
+//跳转到分类文章列表页
+const goCategoryArticleListPage = (categoryId,categoryName) =>{
+    console.log("分类id is:" + categoryId)
+    router.push({path: '/category/article/list',query:{categoryId,categoryName}})
+}
 // initialize components based on data attribute selectors
 onMounted(() => {
     initTooltips();

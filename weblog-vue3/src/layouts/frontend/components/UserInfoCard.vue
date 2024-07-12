@@ -82,8 +82,6 @@
             </div>
         </div>
     </div>
-    <CategoryListCard></CategoryListCard>
-    <TagListCard></TagListCard>
     <!-- <div id="apptest">
     <CardComponent />
     </div> -->
@@ -93,8 +91,6 @@
 import { onMounted } from 'vue'
 import { initTooltips } from 'flowbite'
 import { useBlogSettingsStore } from '@/stores/blogsettings'
-import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue';
-import TagListCard from '@/layouts/frontend/components/TagListCard.vue';
 import CardComponent from '@/layouts/frontend/components/CardComponent.vue';
 // 初始化 Flowbit 组件
 onMounted(() => {

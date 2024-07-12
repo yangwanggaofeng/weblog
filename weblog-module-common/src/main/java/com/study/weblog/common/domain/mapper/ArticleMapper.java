@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.study.weblog.common.domain.dos.ArticleDO;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public interface ArticleMapper extends BaseMapper<ArticleDO> {
@@ -23,5 +24,19 @@ public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
     }
 
+    /**
+     * 根据文章id 批量分页查询文章列表
+     * @param current
+     * @param size
+     * @param articleIds
+     * @return
+     */
+    default Page<ArticleDO> selectPageListByArticleIds(Long current, long size, List<Long> articleIds){
+        Page<ArticleDO> page = new Page<>(current, size);
+        LambdaQueryWrapper<ArticleDO> wrapper = new LambdaQueryWrapper<ArticleDO>()
+                .in(ArticleDO::getId, articleIds)
+                .orderByDesc(ArticleDO::getCreateTime);
+        return selectPage(page, wrapper);
+    }
 
 }

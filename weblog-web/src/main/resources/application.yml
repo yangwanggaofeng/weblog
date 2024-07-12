@@ -14,7 +14,7 @@ jwt:
   secret: CKY5nsdXyeNldjLcRpzF5KUcJ8aAYTYz0OvYMfDdpKwyol4CT7EOkrPKIBvwBDZBeLlSyLj8n2MYVnYkIg6Ubw==
   #token过期时间（单位 分钟）24 *60
   #tokenExpireTime: 1440
-  tokenExpireTime: 1
+  tokenExpireTime: 1440
   #token请求头中的key
   tokenHeaderKey: Authorization
 #  tokenHeaderKey: access_token

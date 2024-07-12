@@ -4,3 +4,8 @@ import axios from "@/axios";
 export function getCategoryPageList(){
     return axios.post("/category/list")
 }
+
+//获取分类下的文章分页数据数据
+export function getCategoryArticlePageList(data){
+    return axios.post("/category/article/list",data)
+}

@@ -1,6 +1,8 @@
 package com.study.weblog.web.service;
 
+import com.study.weblog.common.utils.PageResponse;
 import com.study.weblog.common.utils.Response;
+import com.study.weblog.web.model.vo.tag.FindTagArticlePageListReqVO;
 
 /**
  * @ClassName TagService
@@ -12,8 +14,15 @@ import com.study.weblog.common.utils.Response;
 public interface TagService {
 
     /**
-     * 获取便签信息
+     * 获取标签信息
      * @return
      */
     Response findTagList();
+
+    /**
+     * 获取标签下的文章分页雷彪
+     * @param findTagArticlePageListReqVO
+     * @return
+     */
+    PageResponse findTagArticlePageList(FindTagArticlePageListReqVO findTagArticlePageListReqVO);
 }
